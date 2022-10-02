@@ -42,9 +42,13 @@ class DetailViewController: UIViewController {
         guard let image = imageView.image?.jpegData(compressionQuality: 0.8) else {
             print("No image found")
             return }
+        guard let imageName = selectedImage else {
+            return
+        }
+        
         // UIActivityViewController, which is the iOS method of sharing content with other apps and services.
         // applicationActivities - an array of any of your own app's services you want to make sure are in the list
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: [image, imageName], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
