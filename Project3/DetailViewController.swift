@@ -44,7 +44,7 @@ class DetailViewController: UIViewController {
             return }
         // UIActivityViewController, which is the iOS method of sharing content with other apps and services.
         // applicationActivities - an array of any of your own app's services you want to make sure are in the list
-        let vc = UIActivityViewController(activityItems: [], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
