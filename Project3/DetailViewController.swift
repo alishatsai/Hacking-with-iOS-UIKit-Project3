@@ -22,7 +22,8 @@ class DetailViewController: UIViewController {
         if let imageToLoad = selectedImage {
             imageView.image = UIImage(named: imageToLoad)
         }
-
+        // shareTapped之所以前面要加上 @objc,是因為UIKit是由objective c 寫成的，而UIBarbuttonItem就是在UIKit下面，若不加上 @objc，objective c無法看見shareTapped，這樣才可以將此程式暴露(expose)給objective c
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,14 +37,16 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(true)
         self.navigationController?.hidesBarsOnTap = false
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func shareTapped() {
+        guard let image = imageView.image?.jpegData(compressionQuality: 0.8) else {
+            print("No image found")
+            return }
+        // UIActivityViewController, which is the iOS method of sharing content with other apps and services.
+        // applicationActivities - an array of any of your own app's services you want to make sure are in the list
+        let vc = UIActivityViewController(activityItems: [], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
-    */
 
 }
